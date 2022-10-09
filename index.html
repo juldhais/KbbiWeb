@@ -10,60 +10,66 @@
 
 <style>
   :root {
-  --font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
+    --font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
 
-body {
-  overflow-x: hidden;
-  padding: 0;
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 1rem 1rem;
-  font-family: var(--font-family);
-}
+  body {
+    overflow-x: hidden;
+    padding: 0;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 1rem 1rem;
+    font-family: var(--font-family);
+  }
 
-h1 {
-  margin-bottom: 0;
-}
+  h1 {
+    margin-bottom: 0;
+  }
 
-p {
-  margin-bottom: 2rem;
-}
+  p {
+    margin-bottom: 2rem;
+  }
 
-input {
-  font-family: var(--font-family);
-}
+  input {
+    font-family: var(--font-family);
+  }
 
-input[type="search"] {
-  border: 1px solid gray;
-  border-radius: 15px;
-  height: 36px;
-  padding: 0.1rem 0.5rem 0.2rem 2.4rem;
-  width: 100%;
-  width: 300px;
-  font-size: 1rem;
-}
+  input[type="search"] {
+    border: 1px solid gray;
+    border-radius: 15px;
+    height: 36px;
+    padding: 0.1rem 0.5rem 0.2rem 2.4rem;
+    width: 100%;
+    width: 300px;
+    font-size: 1rem;
+  }
 
-#search-icon {
-  position: relative; right: 296px;
-  fill: gray; width: 24px; height: 24px;
-  vertical-align: middle; cursor: pointer;
-}
+  #search-icon {
+    position: relative;
+    right: 296px;
+    fill: gray;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
 
-main {
-  margin-top: 2rem;
-  margin-right: 1rem;
-}
+  main {
+    margin-top: 2rem;
+    margin-right: 1rem;
+  }
 </style>
 
 <body>
   <h1>KBBI</h1>
   <p><b>Kamus Besar Bahasa Indonesia</b> <i>yang lebih baik</i>.</p>
-  
+
   <form action="#" onsubmit="search()">
     <input type="search" id="input-search" />
     <svg id="search-icon">
-      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+      <path
+        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+      </path>
     </svg>
   </form>
 
@@ -81,26 +87,26 @@ main {
 
     try {
       var word = document.getElementById("input-search").value;
-    if (!word) return;
+      if (!word) return;
 
-    var response = await fetch(`https://kbbiapi.azurewebsites.net/words/${word}`, {
-      headers: {
-        'Accept': '*/*',
-        'Content-Type': 'application/json'
-      },
-    });
-    var result = await response.json();
+      var response = await fetch(`https://kbbiapi.azurewebsites.net/words/${word}`, {
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+      });
+      var result = await response.json();
 
-    document.getElementById("word").innerText = word;
+      document.getElementById("word").innerText = word;
 
-    var ul = document.getElementById("definitions");
-    ul.innerHTML = "";
+      var ul = document.getElementById("definitions");
+      ul.innerHTML = "";
 
-    for (var def of result.definitions) {
-      var li = document.createElement("li");
-      li.innerText = def;
-      ul.appendChild(li);
-    }
+      for (var def of result.definitions) {
+        var li = document.createElement("li");
+        li.innerText = def;
+        ul.appendChild(li);
+      }
     } catch (error) {
       var li = document.createElement("li");
       li.innerText = "Failed to fetch data.";
